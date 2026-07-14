@@ -1,3 +1,5 @@
+import com.android.aaptcompiler.android.ResTableConfig.VERSION
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -6,7 +8,7 @@ plugins {
 android {
     namespace = "com.dietpizza.velocity"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
@@ -14,7 +16,7 @@ android {
     defaultConfig {
         applicationId = "com.dietpizza.velocity"
         minSdk = 31
-        targetSdk = 36
+        targetSdk = VERSION.SDK_ANY
         versionCode = 1
         versionName = "1.0"
 
@@ -23,9 +25,16 @@ android {
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            multiDexEnabled = true
             optimization {
                 enable = false
             }
+        }
+        getByName("debug") {
+            applicationIdSuffix = "debug"
+            versionNameSuffix = "debug"
         }
     }
     compileOptions {
